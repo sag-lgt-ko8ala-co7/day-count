@@ -4,8 +4,11 @@ import { use, useState } from "react";
 import { io } from "next/cache";
 import { diffDays, formatDiff, todayInTokyo } from "@/lib/day-count";
 
+// iOS Safari の date 入力欄は独自の最小幅を持ち、画面の外にはみ出すため、
+// appearance-none と min-w-0 で幅に収める。appearance-none にすると iOS では
+// 値が中央寄せになり、空のときは高さがつぶれるので、左寄せと最小の高さ（PC と同じ 46px）を指定する
 const inputClass =
-  "w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-lg text-zinc-900 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100";
+  "block w-full min-w-0 min-h-[46px] appearance-none rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-lg text-zinc-900 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 [&::-webkit-date-and-time-value]:text-left";
 
 export function DayCounter() {
   // 今日の日付をビルド時の静的シェルに含めず、リクエストのたびに決める
